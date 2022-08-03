@@ -1,8 +1,12 @@
 const customBtn = document.querySelector('#custom-grid');
 const resetBtn = document.querySelector('#reset');
 const grid = document.querySelector('.grid-container');
-const hex = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, "A", "B", "C", "D", "E", "F"];
 let cellArray = document.getElementsByClassName('cell');
+const hex = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, "A", "B", "C", "D", "E", "F"];
+
+function getRandomNumber(){
+  return Math.floor(Math.random()*hex.length);
+}
 
 customBtn.addEventListener('click', () => {
   let userGridSize = prompt('Enter a grid size between 1- 100: ');
@@ -21,7 +25,9 @@ resetBtn.addEventListener('click', () => {
   } 
 });
 
-//256 cells and 6.25% flexBasis are default values for 16x16 grid
+resetBtn.addEventListener('click', ()=>addCells(256,'6.25%'));
+
+// default arguments for 16x16 grid
 function addCells(numberOfCells=256, flexBasisVal='6.25%'){
   grid.innerHTML = '';
   let cell = '';
@@ -32,42 +38,18 @@ function addCells(numberOfCells=256, flexBasisVal='6.25%'){
     grid.appendChild(cell);
   }
 
- //console.log(cellArray.item(15));
-
-
-
-
-
- for (let j = 0; j < cellArray.length; j++) {
-  cellArray.item(j).addEventListener('click', () => {
-    cellArray.item(j).style.backgroundColor = 'red';
-  });
+  // Access each cell of the grid, and execute an event on each selected cell
+  for (let j = 0; j < cellArray.length; j++) {
+    cellArray.item(j).addEventListener('mouseover', () => {
+      let hexColor = '#';
+      for (let i = 0; i < 6; i++){
+        hexColor += hex[getRandomNumber()];
+      }
+      cellArray.item(j).style.backgroundColor = hexColor;
+      cellArray.item(j).style.opacity = (parseFloat(cellArray.item(j).style.opacity) || 0) + 0.1;
+    });
   }
 }
-
-
-
-
-
-
-// grid.array.forEach(element => {
-//   console.log(element);
-// });
-
-// grid.addEventListener('click', function(){
-
-//   console.log(typeof(gridCell)); 
-//   // let hexColor = '#';
-//   // for (let i = 0; i < 6; i++){
-//   //   hexColor += hex[getRandomNumber()];
-//   // }
-//   // gridCell.style.backgroundColor = hexColor;
-// });
-
-function getRandomNumber(){
-  return Math.floor(Math.random()*hex.length);
-}
-
 
 addCells();
 
