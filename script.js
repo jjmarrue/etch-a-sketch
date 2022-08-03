@@ -4,8 +4,12 @@ const grid = document.querySelector('.grid-container');
 let cellArray = document.getElementsByClassName('cell');
 const hex = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, "A", "B", "C", "D", "E", "F"];
 
+// function getRandomNumber(){
+//   return Math.floor(Math.random()*hex.length);
+// }
+
 function getRandomNumber(){
-  return Math.floor(Math.random()*hex.length);
+  return Math.floor(Math.random()*256);
 }
 
 customBtn.addEventListener('click', () => {
@@ -38,15 +42,15 @@ function addCells(numberOfCells=256, flexBasisVal='6.25%'){
     grid.appendChild(cell);
   }
 
-  // Access each cell of the grid, and execute an event on each selected cell
+  // Access each cell of the grid, and apply a random rgb color to the cell
   for (let j = 0; j < cellArray.length; j++) {
     cellArray.item(j).addEventListener('mouseover', () => {
-      let hexColor = '#';
-      for (let i = 0; i < 6; i++){
-        hexColor += hex[getRandomNumber()];
-      }
-      cellArray.item(j).style.backgroundColor = hexColor;
-      cellArray.item(j).style.opacity = (parseFloat(cellArray.item(j).style.opacity) || 0) + 0.1;
+      let rColor = getRandomNumber();
+      let gColor = getRandomNumber();
+      let bColor = getRandomNumber();
+      const darkenVal = 25.5;
+      cellArray.item(j).style.backgroundColor = `rgb(${rColor}, ${gColor}, ${bColor})`;
+      //cellArray.item(j).style.backgroundColor = (parseFloat(cellArray.item(j).style.opacity) || 0) + 0.1;
     });
   }
 }
